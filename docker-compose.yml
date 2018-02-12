@@ -6,8 +6,6 @@ services:
     container_name: users
     build: 
       context: https://github.com/dmmeteo/flask-microservices-users.git
-    volumes:
-      - .:/usr/src/app
     ports:
       - 5001:5000 # HOST:CONTAINER
     environment:
@@ -18,7 +16,7 @@ services:
       - users-db
     links:
       - users-db
-    # TODO entrypoint.sh file in users-service to normal run service
+    # TODO entrypoint.sh file in users-service to normal run service !!!!
 
   users-db:
     container_name: users-db
