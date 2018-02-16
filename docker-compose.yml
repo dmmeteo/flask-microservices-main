@@ -5,8 +5,8 @@ services:
   users:
     container_name: users
     build: 
-      # context: https://github.com/dmmeteo/flask-microservices-users.git
-      context: ../flask-microservices-users
+      context: https://github.com/dmmeteo/flask-microservices-users.git
+      # context: ../flask-microservices-users
     volumes:
         - ../flask-microservices-users:/usr/src/app
     ports:
@@ -23,8 +23,8 @@ services:
   users-db:
     container_name: users-db
     build: 
-      # context: https://github.com/dmmeteo/flask-microservices-users.git#master:project/db
-      context: ../flask-microservices-users/project/db
+      context: https://github.com/dmmeteo/flask-microservices-users.git#master:project/db
+      # context: ../flask-microservices-users/project/db
     ports:
       - 5435:5432 # HOST:CONTAINER
     environment:
