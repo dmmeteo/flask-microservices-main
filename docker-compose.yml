@@ -5,7 +5,10 @@ services:
   users:
     container_name: users
     build: 
-      context: https://github.com/dmmeteo/flask-microservices-users.git
+      # context: https://github.com/dmmeteo/flask-microservices-users.git
+      context: ../flask-microservices-users
+    volumes:
+        - ../flask-microservices-users:/usr/src/app
     ports:
       - 5001:5000 # HOST:CONTAINER
     environment:
@@ -16,12 +19,12 @@ services:
       - users-db
     links:
       - users-db
-    # TODO entrypoint.sh file in users-service to normal run service !!!!
 
   users-db:
     container_name: users-db
     build: 
-      context: https://github.com/dmmeteo/flask-microservices-users.git#master:project/db
+      # context: https://github.com/dmmeteo/flask-microservices-users.git#master:project/db
+      context: ../flask-microservices-users/project/db
     ports:
       - 5435:5432 # HOST:CONTAINER
     environment:
@@ -30,13 +33,14 @@ services:
 
   nginx:
     container_name: nginx
-    build: ./nginx/
+    build: ./nginx
     restart: always
     ports:
       - 80:80
     depends_on:
       - users
-
+    links:
+      - users
 
 
 

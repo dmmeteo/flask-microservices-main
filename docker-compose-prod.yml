@@ -1,20 +1,12 @@
 version: '3.4'
 
 services:
-  users-db:
-    container_name: users-db
-    build: 
-      context: https://github.com/dmmeteo/flask-microservices-users.git#master:project/db
-    ports:
-      - 5435:5432 # HOST:CONTAINER
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
 
-  users-service:
-    container_name: users-service
+  users:
+    container_name: users
     build: 
       context: https://github.com/dmmeteo/flask-microservices-users.git
+      # context: ../flask-microservices-users
     ports:
       - 5001:5000 # HOST:CONTAINER
     environment:
@@ -25,7 +17,17 @@ services:
       - users-db
     links:
       - users-db
-    command: gunicorn -b 0.0.0.0:5000 manage:app
+
+  users-db:
+    container_name: users-db
+    build: 
+      context: https://github.com/dmmeteo/flask-microservices-users.git#master:project/db
+      # context: ../flask-microservices-users/project/db
+    ports:
+      - 5435:5432 # HOST:CONTAINER
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
 
   nginx:
     container_name: nginx
@@ -34,9 +36,10 @@ services:
     ports:
       - 80:80
     depends_on:
-      - users-service
+      - users
     links:
-      - users-service
+      - users
+
 
 
 
