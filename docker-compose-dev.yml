@@ -7,6 +7,8 @@ services:
     build: 
       context: https://github.com/dmmeteo/flask-microservices-users.git
       # context: ../flask-microservices-users
+    volumes:
+        - ../flask-microservices-users:/usr/src/app
     ports:
       - 5001:5000 # HOST:CONTAINER
     environment:
