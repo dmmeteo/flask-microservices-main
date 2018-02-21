@@ -5,8 +5,8 @@ services:
   web-service:
     container_name: web-service
     build:
-      # context: https://github.com/dmmeteo/flask-microservices-client.git
-      context: ../flask-microservices-client
+      context: https://github.com/dmmeteo/flask-microservices-client.git
+      # context: ../flask-microservices-client
     ports:
       - 9000:9000
     environment:

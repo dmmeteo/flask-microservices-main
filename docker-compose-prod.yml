@@ -2,6 +2,21 @@ version: '3.4'
 
 services:
 
+  web-service:
+    container_name: web-service
+    build:
+      context: https://github.com/dmmeteo/flask-microservices-client.git
+      # context: ../flask-microservices-client
+    ports:
+      - 9000:9000
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
+    depends_on:
+      - users
+    links:
+      - users
+
   users:
     container_name: users
     build: 
