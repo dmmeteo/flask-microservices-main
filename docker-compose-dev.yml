@@ -7,9 +7,6 @@ services:
     build:
       # context: https://github.com/dmmeteo/flask-microservices-client.git
       context: ../flask-microservices-client
-      dockerfile: Dockerfile-dev
-    volumes:
-      - ../flask-microservices-client
     ports:
       - 9000:9000
     environment:
@@ -57,8 +54,10 @@ services:
       - 80:80
     depends_on:
       - users
+      - web-service
     links:
       - users
+      - web-service
 
 
 
