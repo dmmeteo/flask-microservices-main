@@ -6,6 +6,7 @@ services:
     container_name: client
     build:
       context: https://github.com/dmmeteo/flask-microservices-client.git
+      dockerfile: Dockerfile-stage
     ports:
       - 80
     environment:
@@ -44,7 +45,9 @@ services:
 
   nginx:
     container_name: nginx
-    build: ./nginx
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile-stage
     restart: always
     ports:
       - 80:80
