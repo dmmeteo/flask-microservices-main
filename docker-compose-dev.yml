@@ -2,14 +2,15 @@ version: '3.4'
 
 services:
 
-  web-service:
-    container_name: web-service
+  client:
+    container_name: client
     build:
       context: ../flask-microservices-client
+      dockerfile: Dockerfile-dev
     volumes:
       - ../flask-microservices-client:/usr/src/app
     ports:
-      - 9000:9000
+      - 3007:3000
     environment:
       - NODE_ENV=development
       - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
@@ -49,16 +50,15 @@ services:
 
   nginx:
     container_name: nginx
-    build: ./nginx
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile-dev
     restart: always
     ports:
       - 80:80
     depends_on:
       - users
-      - web-service
-    links:
-      - users
-      - web-service
+      - client
 
 
 

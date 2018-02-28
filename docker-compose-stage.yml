@@ -2,12 +2,12 @@ version: '3.4'
 
 services:
 
-  web-service:
-    container_name: web-service
+  client:
+    container_name: client
     build:
       context: https://github.com/dmmeteo/flask-microservices-client.git
     ports:
-      - 9000:9000
+      - 80
     environment:
       - NODE_ENV=development
       - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
@@ -22,10 +22,10 @@ services:
       context: https://github.com/dmmeteo/flask-microservices-users.git
       dockerfile: Dockerfile-stage
     ports:
-      - 5001:5000
+      - 5000
     environment:
-      - APP_SETTINGS=project.config.DevelopmentConfig
-      - DATABASE_URL=postgresql://postgres:postgres@users-db:5432/users_dev
+      - APP_SETTINGS=project.config.ProductionConfig
+      - DATABASE_URL=postgresql://postgres:postgres@users-db:5432/users_prod
       - DATABASE_TEST_URL=postgresql://postgres:postgres@users-db:5432/users_test
     depends_on:
       - users-db
@@ -37,7 +37,7 @@ services:
     build: 
       context: https://github.com/dmmeteo/flask-microservices-users.git#master:project/db
     ports:
-      - 5435:5432
+      - 5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -50,10 +50,10 @@ services:
       - 80:80
     depends_on:
       - users
-      - web-service
+      - client
     links:
       - users
-      - web-service
+      - client
 
 
 
