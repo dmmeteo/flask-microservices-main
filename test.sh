@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 fails=''
 
@@ -8,14 +8,14 @@ inspect() {
     fi
 }
 
-docker-composer -f docker-compose-stage.yml run users python manage.py test
+docker-compose -f docker-compose-stage.yml run users python manage.py test
 inspect $? users
 
 if [ -n "${fails}" ]; then
-    echo 'Tests failed: ${fails}'
+    echo "Tests failed: ${fails}"
     exit 1
 else
-    echo 'Tests passed!'
+    echo "Tests passed!"
     exit 0
 fi
 
