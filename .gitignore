@@ -103,3 +103,6 @@ ENV/
 # database
 *.db
 db-data/
+
+# node modules
+node_modules/
