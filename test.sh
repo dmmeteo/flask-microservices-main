@@ -11,6 +11,9 @@ inspect() {
 docker-compose -f docker-compose-stage.yml run users python manage.py test
 inspect $? users
 
+testcafe chrome e2e
+inspect $? e2e
+
 if [ -n "${fails}" ]; then
     echo "Tests failed: ${fails}"
     exit 1

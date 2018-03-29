@@ -1,4 +1,18 @@
+language: node_js
+node_js: 'stable'
+
+before_install:
+  - stty cols 80
+
+dist: trusty
 sudo: required
+
+addons:
+  apt:
+    sources:
+     - google-chrome
+    packages:
+     - google-chrome-stable
 
 services:
   - docker
@@ -12,9 +26,13 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
-  - export REACT_APP_USERS_SERVICE_URL=http:\\localhost
 
 before_script:
+  - export TEST_URL=http://localhost
+  - export REACT_APP_USERS_SERVICE_URL=http://localhost
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3
   - docker-compose -f docker-compose-stage.yml up --build -d
 
 script:
