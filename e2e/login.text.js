@@ -19,20 +19,21 @@ test(`should allow a user to sign in`, async(t) => {
     // Register user
     await t
         .navigateTo(`${TEST_URL}/register`)
-        .typeText('input[name=username]', username)
-        .typeText('input[name=email]', email)
-        .typeText('input[name=password]', 'test')
-        .click(Selector('input[type=submit]'))
+        .typeText('input[name="username"]', username)
+        .typeText('input[name="email"]', email)
+        .typeText('input[name="password"]', 'test')
+        .click(Selector('input[type="submit"]'))
 
     // log a user out
-    await t.click(Selector('a').withText('Log Out'))
+    await t
+        .click(Selector('a').withText('Log Out'))
 
     // log a user in
     await t
         .navigateTo(`${TEST_URL}/login`)
-        .typeText('input[name=email]', email)
-        .typeText('input[name=password]', 'test')
-        .click(Selector('input[type=submit]'))
+        .typeText('input[name="email"]', email)
+        .typeText('input[name="password"]', 'test')
+        .click(Selector('input[type="submit"]'))
 
     // assert user is redirected to '/'
     // assert '/' is displayed property
@@ -46,3 +47,51 @@ test(`should allow a user to sign in`, async(t) => {
         .expect(Selector('a').withText('Register').exists).notOk()
         .expect(Selector('a').withText('Log In').exists).notOk()
 })
+
+test(`should allow a user to sign in`, async(t) => {
+
+    // register user
+    await t
+        .navigateTo(`${TEST_URL}/register`)
+        .typeText('input[name="username"]', username)
+        .typeText('input[name="email"]', email)
+        .typeText('input[name="password"]', 'text')
+        .click(Selector('input[type="submit"]'))
+
+    // log a user out
+    await t
+        .click(Selector('a').withText('Log Out'))
+
+    // log a user in
+    await t
+        .navigateTo(`${TEST_URL}/login`)
+        .typeText('input[name="email"]', email)
+        .typeText('input[name="password"]', 'text')
+        .click(Selector('input[type="submit"]'))
+
+    // assert user is redirectde to '/'
+    // assert '/' is displayed property
+    const tableRow = Selector('td').withText(username).parent();
+    await t
+        .expect(Selector('H1').withText('All Users').exists).ok()
+        .expect(tableRow.child().withText(username).exists).ok()
+        .expect(tableRow.child().withText(email).exists).ok()
+        .expect(Selector('a').withText('User Status').exists).ok()
+        .expect(Selector('a').withText('Log Out').exists).ok()
+        .expect(Selector('a').withText('Register').exists).notOk()
+        .expect(Selector('a').withText('Log In').exists).notOk()
+
+    // log a user out
+    await t.click(Selector('a').withText('log Out'))
+
+    // assert '/logout' is displayed property
+    await t
+        .expect(Selector('p').withText('You are now logged out').exists).ok()
+        .expect(Selector('a').withText('User Status').exists).notOk()
+        .expect(Selector('a').withText('Log Out').exists).notOk()
+        .expect(Selector('a').withText('Register').exists).ok()
+        .expect(Selector('a').withText('Log In').exists).ok()
+})
+
+
+
