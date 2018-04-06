@@ -2,8 +2,8 @@ import {Selector} from 'testcafe';
 import randomstring from 'randomstring';
 
 const TEST_URL = process.env.TEST_URL;
-const username = randomstring.generate(8);
-const email = `${username}@test.com`;
+var username = randomstring.generate(8);
+var email = `${username}@test.com`;
 
 fixture('/login').page(`${TEST_URL}/login`);
 
@@ -25,8 +25,7 @@ test(`should allow a user to sign in`, async(t) => {
         .click(Selector('input[type="submit"]'))
 
     // log a user out
-    await t
-        .click(Selector('a').withText('Log Out'))
+    await t.click(Selector('a').withText('Log Out'))
 
     // log a user in
     await t
@@ -50,6 +49,10 @@ test(`should allow a user to sign in`, async(t) => {
 
 test(`should allow a user to sign in`, async(t) => {
 
+    // change user
+    username+=1
+    email+=1
+
     // register user
     await t
         .navigateTo(`${TEST_URL}/register`)
@@ -59,8 +62,7 @@ test(`should allow a user to sign in`, async(t) => {
         .click(Selector('input[type="submit"]'))
 
     // log a user out
-    await t
-        .click(Selector('a').withText('Log Out'))
+    await t.click(Selector('a').withText('Log Out'))
 
     // log a user in
     await t
@@ -82,7 +84,7 @@ test(`should allow a user to sign in`, async(t) => {
         .expect(Selector('a').withText('Log In').exists).notOk()
 
     // log a user out
-    await t.click(Selector('a').withText('log Out'))
+    await t.click(Selector('a').withText('Log Out'))
 
     // assert '/logout' is displayed property
     await t
