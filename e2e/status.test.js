@@ -30,7 +30,7 @@ test(`should display user info if user is logged in`, async(t) => {
     // assert '/status' is displayed property
     await t
         .navigateTo(`${TEST_URL}/status`)
-        .expect(Selector('li > strong').withText('User ID:').exists).ok()
+        .expect(Selector('li>strong').withText('User ID:').exists).ok()
         .expect(Selector('li > strong').withText('Email:').exists).ok()
         .expect(Selector('li').withText(email).exists).ok()
         .expect(Selector('li > strong').withText('Username:').exists).ok()
