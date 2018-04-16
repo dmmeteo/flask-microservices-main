@@ -5,6 +5,7 @@ const TEST_URL = process.env.TEST_URL;
 const username = randomstring.generate(8);
 const email = `${username}@test.com`;
 const correntDate = new Date()
+const password = randomstring.generate(11);
 
 
 fixture('/status').page(`${TEST_URL}/status`);
@@ -24,7 +25,7 @@ test(`should display user info if user is logged in`, async(t) => {
         .navigateTo(`${TEST_URL}/register`)
         .typeText('input[name="username"]', username)
         .typeText('input[name="email"]', email)
-        .typeText('input[name="password"]', 'test')
+        .typeText('input[name="password"]', password)
         .click(Selector('input[type="submit"]'))
 
     // assert '/status' is displayed property
