@@ -50,6 +50,7 @@ test(`should allow a user to sign in`, async(t) => {
         .expect(Selector('a').withText('Log Out').exists).ok()
         .expect(Selector('a').withText('Register').exists).notOk()
         .expect(Selector('a').withText('Log In').exists).notOk()
+        .expect(Selector('.alert-success').withText('Welcome!').exists).ok()
 })
 
 test(`should allow a user to sign in`, async(t) => {
