@@ -130,6 +130,42 @@ test(`should display the page correctly if a user is not logged in`, async(t) =>
         .expect(Selector('.alert').exists).notOk()
 })
 
+test(`should throw an error if the credentials are incorrect`, async(t) => {
+    // attempt to log in
+    await t
+        .navigateTo(`${TEST_URL}/login`)
+        .typeText('input[name="email"]', 'incorrect@email.com')
+        .typeText('input[name="password"]', password)
+        .click(Selector('input[type="submit"]'))
+
+    // assert user login failed
+    await t
+        .expect(Selector('H1').withText('Login').exists).ok()
+        .expect(Selector('a').withText('User Status').exists).notOk()
+        .expect(Selector('a').withText('Log Out').exists).notOk()
+        .expect(Selector('a').withText('Register').exists).ok()
+        .expect(Selector('a').withText('Log In').exists).ok()
+        .expect(Selector('.alert-success').exists).notOk()
+        .expect(Selector('.alert-danger').withText('User does not exist.').exists).ok()
+
+    // attempt to log in
+    await t
+        .navigateTo(`${TEST_URL}/login`)
+        .typeText('input[name="email"]', email)
+        .typeText('input[name="password"]', 'incorrectpassword')
+        .click(Selector('input[type="submit"]'))
+
+    // assert user login failed
+    await t
+        .expect(Selector('H1').withText('Login').exists).ok()
+        .expect(Selector('a').withText('User Status').exists).notOk()
+        .expect(Selector('a').withText('Log Out').exists).notOk()
+        .expect(Selector('a').withText('Register').exists).ok()
+        .expect(Selector('a').withText('Log In').exists).ok()
+        .expect(Selector('.alert-success').exists).notOk()
+        .expect(Selector('.alert-danger').withText('User does not exist.').exists).ok()
+})
+
 
 
 

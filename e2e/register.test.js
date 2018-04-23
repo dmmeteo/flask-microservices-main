@@ -40,3 +40,47 @@ test(`should allow a user to register`, async(t) => {
         .expect(Selector('a').withText('Register').exists).notOk()
         .expect(Selector('a').withText('Log In').exists).notOk()
 });
+
+test(`should throw an error if the username is taken`, async(t) => {
+    // register user with dublicate user name
+    await t
+        .navigateTo(`${TEST_URL}/register`)
+        .typeText('input[name="username"]', username)
+        .typeText('input[name="email"]', `${email}unique`)
+        .typeText('input[name="password"]', password)
+        .click(Selector('input[type="submit"]'))
+
+    // assert user registration failed
+    await t
+        .expect(Selector('h1').withText('Register').exists).ok()
+        .expect(Selector('a').withText('User Status').exists).notOk()
+        .expect(Selector('a').withText('Log Out').exists).notOk()
+        .expect(Selector('a').withText('Register').exists).ok()
+        .expect(Selector('a').withText('Log In').exists).ok()
+        .expect(Selector('.alert-success').exists).notOk()
+        .expect(Selector('.alert-danger').withText('That user already exists.').exists).ok()
+})
+
+test(`should throw an error if the email is taken`, async(t) => {
+    // register user with dublicate user email
+    await t
+        .navigateTo(`${TEST_URL}/register`)
+        .typeText('input[name="username"]', `${username}unique`)
+        .typeText('input[name="email"]', email)
+        .typeText('input[name="password"]', password)
+        .click(Selector('input[type="submit"]'))
+
+    // assert user registration failed
+    await t
+        .expect(Selector('h1').withText('Register').exists).ok()
+        .expect(Selector('a').withText('User Status').exists).notOk()
+        .expect(Selector('a').withText('Log Out').exists).notOk()
+        .expect(Selector('a').withText('Register').exists).ok()
+        .expect(Selector('a').withText('Log In').exists).ok()
+        .expect(Selector('.alert-success').exists).notOk()
+        .expect(Selector('.alert-danger').withText('That user already exists.').exists).ok()
+})
+
+
+
+
