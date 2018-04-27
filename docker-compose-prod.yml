@@ -57,6 +57,16 @@ services:
     links:
       - users
 
+  swagger:
+    container_name: swagger
+    build:
+      context: https://github.com/dmmeteo/flask-microservices-swagger.git
+    ports:
+      - 8080:8080
+    environment:
+      - API_URL=https://raw.githubusercontent.com/dmmeteo/flask-microservices-swagger/master/swagger.json
+    depends_on:
+      - users
 
 
 

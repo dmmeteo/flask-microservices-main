@@ -25,9 +25,9 @@ services:
     ports:
       - 5000
     environment:
-      - SECRET_KEY=wakawakapizdawaka
-      - APP_SETTINGS=project.config.ProductionConfig
-      - DATABASE_URL=postgresql://postgres:postgres@users-db:5432/users_prod
+      - SECRET_KEY=${SECRET_KEY}
+      - APP_SETTINGS=project.config.StagingConfig
+      - DATABASE_URL=postgresql://postgres:postgres@users-db:5432/users_stage
       - DATABASE_TEST_URL=postgresql://postgres:postgres@users-db:5432/users_test
     depends_on:
       - users-db
@@ -59,7 +59,16 @@ services:
       - users
       - client
 
-
+  swagger:
+    container_name: swagger
+    build:
+      context: https://github.com/dmmeteo/flask-microservices-swagger.git
+    ports:
+      - 8080:8080
+    environment:
+      - API_URL=https://raw.githubusercontent.com/dmmeteo/flask-microservices-swagger/master/swagger.json
+    depends_on:
+      - users
 
 
 
