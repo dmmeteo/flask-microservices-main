@@ -38,7 +38,7 @@ before_script:
 
 script:
   - docker-compose -f docker-compose-stage.yml run users python manage.py test
-  - docker-compose -f docker-compose-staging.yml run users-service python manage.py recreate_db
+  - docker-compose -f docker-compose-stage.yml run users-service python manage.py recreate_db
   - testcafe chrome e2e
   # - sh test.sh
 
