@@ -25,7 +25,7 @@ services:
     ports:
       - 5000
     environment:
-      - SECRET_KEY=wakawakapizdawaka
+      - SECRET_KEY=${SECRET_KEY}
       - APP_SETTINGS=project.config.ProductionConfig
       - DATABASE_URL=postgresql://postgres:postgres@users-db:5432/users_prod
       - DATABASE_TEST_URL=postgresql://postgres:postgres@users-db:5432/users_test
