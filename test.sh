@@ -11,6 +11,9 @@ inspect() {
 docker-compose -f docker-compose-stage.yml run users python manage.py test
 inspect $? users
 
+docker-compose -f docker-compose-stage.yml run eval python manage.py test
+inspect $? eval
+
 testcafe chrome e2e
 inspect $? e2e
 

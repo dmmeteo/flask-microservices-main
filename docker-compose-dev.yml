@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3'
 
 services:
 
@@ -42,7 +42,6 @@ services:
     container_name: users-db
     build: 
       context: ../flask-microservices-users/project/db
-      dockerfile: Dockerfile
     ports:
       - 5435:5432
     environment:
@@ -72,6 +71,36 @@ services:
     depends_on:
       - users
 
+  eval:
+    container_name: eval
+    build:
+      context: ../flask-microservices-eval
+      dockerfile: Dockerfile-dev
+    volumes:
+      - ../flask-microservices-eval:/usr/src/app
+    ports:
+      - 5002:5000
+    environment:
+      - APP_SETTINGS=project.config.DevelopmentConfig
+      - USERS_SECRET_URL=http://users:5000
+      - DATABASE_URL=postgresql://postgres:postgres@eval-db:5432/eval_dev
+      - DATABASE_TEST_URL=postgresql://postgres:postgres@eval-db:5432/eval_test
+    depends_on:
+      - users
+      - eval-db
+    links:
+      - users
+      - eval-db
 
+  eval-db:
+    container_name: eval-db
+    restart: always
+    build:
+      context: ../flask-microservices-eval/project/db
+    ports:
+      - 5436:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
 
 
