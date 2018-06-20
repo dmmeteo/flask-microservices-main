@@ -44,4 +44,4 @@ script:
   # - sh test.sh
 
 after_script:
-  - docker-compose -f docker-compose-stage.yml down
+  - docker-compose down
