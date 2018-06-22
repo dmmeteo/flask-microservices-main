@@ -16,8 +16,6 @@ services:
       - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
     depends_on:
       - users
-    links:
-      - users
 
   users:
     container_name: users
@@ -29,15 +27,12 @@ services:
     ports:
       - 5001:5000
     environment:
-      - FLASK_APP=project/__init__.py
       - FLASK_DEBUG=1
       - SECRET_KEY=${SECRET_KEY}
       - APP_SETTINGS=project.config.DevelopmentConfig
       - DATABASE_URL=postgresql://postgres:postgres@users-db:5432/users_dev
       - DATABASE_TEST_URL=postgresql://postgres:postgres@users-db:5432/users_test
     depends_on:
-      - users-db
-    links:
       - users-db
 
   users-db:
@@ -83,14 +78,12 @@ services:
     ports:
       - 5002:5000
     environment:
+      - FLASK_DEBUG=1
       - APP_SETTINGS=project.config.DevelopmentConfig
       - USERS_SECRET_URL=http://users:5000
       - DATABASE_URL=postgresql://postgres:postgres@eval-db:5432/eval_dev
       - DATABASE_TEST_URL=postgresql://postgres:postgres@eval-db:5432/eval_test
     depends_on:
-      - users
-      - eval-db
-    links:
       - users
       - eval-db
 

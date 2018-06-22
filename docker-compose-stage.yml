@@ -23,7 +23,6 @@ services:
     ports:
       - 5000
     environment:
-      - FLASK_APP=project/__init__.py
       - FLASK_DEBUG=1
       - SECRET_KEY=${SECRET_KEY}
       - APP_SETTINGS=project.config.StagingConfig
@@ -65,35 +64,32 @@ services:
     depends_on:
       - users
 
-  # eval:
-  #   container_name: eval
-  #   build: 
-  #     context: https://github.com/dmmeteo/flask-microservices-eval.git
-  #     dockerfile: Dockerfile-stage
-  #   volumes:
-  #     - ../flask-microservices-eval:/usr/src/app
-  #   ports:
-  #     - 5002:5000
-  #   environment:
-  #     - FLASK_APP=project/__init__.py
-  #     - FLASK_DEBUG=1
-  #     - APP_SETTINGS=project.config.DevelopmentConfig
-  #     - USERS_SECRET_URL=http://users:5000
-  #     - DATABASE_URL=postgresql://postgres:postgres@eval-db:5432/eval_dev
-  #     - DATABASE_TEST_URL=postgresql://postgres:postgres@eval-db:5432/eval_test
-  #   depends_on:
-  #     - users
-  #     - eval-db
+  eval:
+    container_name: eval
+    build: 
+      context: https://github.com/dmmeteo/flask-microservices-eval.git
+      dockerfile: Dockerfile-stage
+    ports:
+      - 5002:5000
+    environment:
+      - FLASK_DEBUG=1
+      - APP_SETTINGS=project.config.DevelopmentConfig
+      - USERS_SECRET_URL=http://users:5000
+      - DATABASE_URL=postgresql://postgres:postgres@eval-db:5432/eval_dev
+      - DATABASE_TEST_URL=postgresql://postgres:postgres@eval-db:5432/eval_test
+    depends_on:
+      - users
+      - eval-db
 
-  # eval-db:
-  #   container_name: eval-db
-  #   restart: always
-  #   build: 
-  #     context: https://github.com/dmmeteo/flask-microservices-eval.git#master:project/db
-  #   ports:
-  #     - 5436:5432
-  #   environment:
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=postgres
+  eval-db:
+    container_name: eval-db
+    restart: always
+    build: 
+      context: https://github.com/dmmeteo/flask-microservices-eval.git#master:project/db
+    ports:
+      - 5436:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
 
 

@@ -14,8 +14,6 @@ services:
       - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
     depends_on:
       - users
-    links:
-      - users
 
   users:
     container_name: users
@@ -30,8 +28,6 @@ services:
       - DATABASE_URL=postgresql://postgres:postgres@users-db:5432/users_prod
       - DATABASE_TEST_URL=postgresql://postgres:postgres@users-db:5432/users_test
     depends_on:
-      - users-db
-    links:
       - users-db
 
   users-db:
@@ -53,8 +49,6 @@ services:
     ports:
       - 80:80
     depends_on:
-      - users
-    links:
       - users
 
   swagger:
