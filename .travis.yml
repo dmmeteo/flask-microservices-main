@@ -28,7 +28,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 before_script:
-  - export COMPOSE_FILE=docker-compose-stage.yml
+  - export COMPOSE_FILE=docker-compose-ci.yml
   - export TEST_URL=http://localhost
   - export REACT_APP_USERS_SERVICE_URL=http://localhost
   - export SECRET_KEY=my_precious
