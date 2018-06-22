@@ -8,10 +8,12 @@ inspect() {
     fi
 }
 
-docker-compose -f docker-compose-ci.yml run users python manage.py test
+export COMPOSE_FILE=docker-compose-ci.yml
+
+docker-compose run users python manage.py test
 inspect $? users
 
-docker-compose -f docker-compose-ci.yml run eval python manage.py test
+docker-compose run eval python manage.py test
 inspect $? eval
 
 testcafe chrome e2e
