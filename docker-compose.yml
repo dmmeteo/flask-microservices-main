@@ -6,7 +6,7 @@ services:
     container_name: client
     build:
       context: ../flask-microservices-client
-      dockerfile: Dockerfile-dev
+      dockerfile: Dockerfile-local
     volumes:
       - ../flask-microservices-client:/usr/src/app
     ports:
@@ -21,7 +21,7 @@ services:
     container_name: users
     build: 
       context: ../flask-microservices-users
-      dockerfile: Dockerfile-dev
+      dockerfile: Dockerfile-local
     volumes:
         - ../flask-microservices-users:/usr/src/app
     ports:
@@ -49,7 +49,6 @@ services:
     container_name: nginx
     build: 
       context: ./nginx
-      dockerfile: Dockerfile-dev
     restart: always
     ports:
       - 80:80
@@ -72,7 +71,7 @@ services:
     container_name: eval
     build:
       context: ../flask-microservices-eval
-      dockerfile: Dockerfile-dev
+      dockerfile: Dockerfile-local
     volumes:
       - ../flask-microservices-eval:/usr/src/app
     ports:
