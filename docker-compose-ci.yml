@@ -21,7 +21,6 @@ services:
     ports:
       - 5000
     environment:
-      - FLASK_DEBUG=1
       - SECRET_KEY=${SECRET_KEY}
       - APP_SETTINGS=project.config.StagingConfig
       - DATABASE_URL=postgresql://postgres:postgres@users-db:5432/users_stage
@@ -68,7 +67,6 @@ services:
     ports:
       - 5002:5000
     environment:
-      - FLASK_DEBUG=1
       - APP_SETTINGS=project.config.DevelopmentConfig
       - USERS_SECRET_URL=http://users:5000
       - DATABASE_URL=postgresql://postgres:postgres@eval-db:5432/eval_dev
