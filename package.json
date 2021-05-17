@@ -1,7 +1,7 @@
 {
     "name": "flask-microservices-main",
     "dependencies": {
-        "randomstring": "^1.1.5",
+        "randomstring": "^1.2.1",
         "testcafe": "^0.19.1"
     }
 }
